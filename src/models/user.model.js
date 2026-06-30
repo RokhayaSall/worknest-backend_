@@ -1,0 +1,81 @@
+import db from "../config/db.js";
+
+export const User = {
+  // ─────────────────────────────
+  // FIND USER BY EMAIL
+  // ─────────────────────────────
+  async findByEmail(email) {
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
+
+    return rows[0] || null;
+  },
+
+  // ─────────────────────────────
+  // FIND USER BY ID
+  // ─────────────────────────────
+  async findById(id) {
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE id = ?",
+      [id]
+    );
+
+    return rows[0] || null;
+  },
+
+  // ─────────────────────────────
+  // CREATE USER
+  // ─────────────────────────────
+  async create({
+    last_name,
+    first_name,
+    birth_date,
+    email,
+    gender,
+    role,
+    password,
+    number_address,
+    street,
+    city,
+    postal_code,
+    country,
+  }) {
+    const [result] = await db.query(
+      `
+      INSERT INTO users (
+        last_name,
+        first_name,
+        birth_date,
+        email,
+        gender,
+        role,
+        password,
+        number_address,
+        street,
+        city,
+        postal_code,
+        country
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      [
+        last_name,
+        first_name,
+        birth_date,
+        email,
+        gender,
+        role,
+        password,
+        number_address,
+        street,
+        city,
+        postal_code,
+        country,
+      ]
+    );
+
+    return this.findById(result.insertId);
+  },
+};
