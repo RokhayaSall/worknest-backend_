@@ -25,6 +25,14 @@ export const ListingService = {
     return listing;
   },
 
+ // ─────────────────────────────
+  // GET MY LISTINGS
+  // ─────────────────────────────
+  async getByUserId(userId) {
+    return await Listing.findByUserId(userId);
+  },
+
+
   // ─────────────────────────────
   // CREATE LISTING
   // ─────────────────────────────

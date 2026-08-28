@@ -18,6 +18,44 @@ export const Reservation = {
     return rows[0] || null;
   },
 
+  async findByUserId(userId) {
+    const [rows] = await db.query(
+      `
+    SELECT
+      reservations.id,
+      reservations.user_id,
+      reservations.room_id,
+      reservations.start_at,
+      reservations.end_at,
+      rooms.room_number
+    FROM reservations
+    INNER JOIN rooms
+      ON reservations.room_id = rooms.id
+    WHERE reservations.user_id = ?
+    `,
+      [userId]
+    );
+
+    return rows;
+  },
+
+  // Vérifier si la chambre est déjà réservée
+  // sur la période demandée
+  async findConflict(roomId, startAt, endAt) {
+    const [rows] = await db.query(
+      `
+      SELECT *
+      FROM reservations
+      WHERE room_id = ?
+        AND start_at < ?
+        AND end_at > ?
+      `,
+      [roomId, endAt, startAt]
+    );
+
+    return rows[0] || null;
+  },
+
   async create(data) {
     const [result] = await db.query(
       `

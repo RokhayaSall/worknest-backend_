@@ -18,6 +18,19 @@ export const Listing = {
     return rows[0] || null;
   },
 
+  async findByUserId(userId) {
+    const [rows] = await db.query(
+      `
+    SELECT *
+    FROM listings
+    WHERE user_id = ?
+    `,
+      [userId]
+    );
+
+    return rows;
+  },
+
   async create(listingData) {
     const [result] = await db.query(
       `
@@ -32,9 +45,10 @@ export const Listing = {
         street,
         city,
         postal_code,
-        country
+        country,
+        image_url
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
       [
         listingData.user_id,
@@ -48,6 +62,7 @@ export const Listing = {
         listingData.city,
         listingData.postal_code,
         listingData.country,
+        listingData.image_url,
       ]
     );
 
@@ -85,22 +100,22 @@ export const Listing = {
         id,
       ]
     );
-  
+
     return this.findById(id);
   },
-  
+
   async delete(id) {
     const listing = await this.findById(id);
-  
+
     if (!listing) {
       return null;
     }
-  
+
     await db.query(
       "DELETE FROM listings WHERE id = ?",
       [id]
     );
-  
+
     return listing;
   },
 };
