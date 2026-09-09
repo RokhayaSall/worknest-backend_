@@ -107,4 +107,5 @@ export const ListingService = {
 
     return await Listing.delete(id);
   },
+  
 };

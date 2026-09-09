@@ -89,4 +89,37 @@ export const AuthService = {
 
     return user;
   },
+
+  // ─────────────────────────────
+// GET ALL USERS - ADMIN
+// ─────────────────────────────
+async getAllUsers() {
+  return await User.findAll();
+},
+
+// ─────────────────────────────
+// DELETE USER - ADMIN
+// ─────────────────────────────
+async deleteUser(id, currentUser) {
+  if (Number(id) === Number(currentUser.id)) {
+    throw new AppError(
+      "Vous ne pouvez pas supprimer votre propre compte",
+      403
+    );
+  }
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new AppError(
+      "Utilisateur introuvable",
+      404
+    );
+  }
+
+  await User.delete(id);
+
+  return user;
+},
+
 };

@@ -26,3 +26,26 @@ export const getProfile = async (req, res) => {
 
   res.status(200).json(user);
 };
+
+// ─────────────────────────────
+// GET ALL USERS - ADMIN
+// ─────────────────────────────
+export const getAllUsers = async (req, res) => {
+  const users = await AuthService.getAllUsers();
+
+  res.status(200).json(users);
+};
+
+// ─────────────────────────────
+// DELETE USER - ADMIN
+// ─────────────────────────────
+export const deleteUser = async (req, res) => {
+  await AuthService.deleteUser(
+    req.params.id,
+    req.user
+  );
+
+  res.status(200).json({
+    message: "Utilisateur supprimé avec succès",
+  });
+};

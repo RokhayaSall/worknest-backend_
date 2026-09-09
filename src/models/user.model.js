@@ -26,6 +26,42 @@ export const User = {
   },
 
   // ─────────────────────────────
+  // FIND ALL USERS
+  // ─────────────────────────────
+  async findAll() {
+    const [rows] = await db.query(`
+    SELECT
+      id,
+      last_name,
+      first_name,
+      birth_date,
+      email,
+      gender,
+      role,
+      number_address,
+      street,
+      city,
+      postal_code,
+      country
+    FROM users
+  `);
+
+    return rows;
+  },
+
+  // ─────────────────────────────
+  // DELETE USER
+  // ─────────────────────────────
+  async delete(id) {
+    const [result] = await db.query(
+      "DELETE FROM users WHERE id = ?",
+      [id]
+    );
+
+    return result.affectedRows > 0;
+  },
+
+  // ─────────────────────────────
   // CREATE USER
   // ─────────────────────────────
   async create({
@@ -78,4 +114,42 @@ export const User = {
 
     return this.findById(result.insertId);
   },
+
+  // ─────────────────────────────
+  // FIND ALL USERS
+  // ─────────────────────────────
+  async findAll() {
+    const [rows] = await db.query(`
+    SELECT
+      id,
+      last_name,
+      first_name,
+      birth_date,
+      email,
+      gender,
+      role,
+      number_address,
+      street,
+      city,
+      postal_code,
+      country
+    FROM users
+  `);
+
+    return rows;
+  },
+
+  // ─────────────────────────────
+  // DELETE USER
+  // ─────────────────────────────
+  async delete(id) {
+    const [result] = await db.query(
+      "DELETE FROM users WHERE id = ?",
+      [id]
+    );
+
+    return result.affectedRows > 0;
+  },
+
 };
+

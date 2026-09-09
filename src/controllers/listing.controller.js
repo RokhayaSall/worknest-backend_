@@ -1,31 +1,27 @@
 import { ListingService } from "../services/listing.service.js";
 
-export const getListings = async (
-  req,
-  res
-) => {
+export const getListings = async (req, res) => {
   const listings =
     await ListingService.getAll();
 
   res.status(200).json(listings);
 };
 
-export const getListing = async (
-  req,
-  res
-) => {
+export const getListing = async (req, res) => {
   const listing =
-    await ListingService.getById(
-      req.params.id
-    );
+    await ListingService.getById(req.params.id);
 
   res.status(200).json(listing);
 };
 
-export const createListing = async (
-  req,
-  res
-) => {
+export const getMyListings = async (req, res) => {
+  const listings =
+    await ListingService.getByUserId(req.user.id);
+
+  res.status(200).json(listings);
+};
+
+export const createListing = async (req, res) => {
   const listing =
     await ListingService.createListing({
       ...req.body,
@@ -38,10 +34,7 @@ export const createListing = async (
 // ─────────────────────────────
 // UPDATE LISTING
 // ─────────────────────────────
-export const updateListing = async (
-  req,
-  res
-) => {
+export const updateListing = async (req, res) => {
   const listing =
     await ListingService.updateListing(
       req.params.id,
@@ -55,10 +48,7 @@ export const updateListing = async (
 // ─────────────────────────────
 // DELETE LISTING
 // ─────────────────────────────
-export const deleteListing = async (
-  req,
-  res
-) => {
+export const deleteListing = async (req, res) => {
   await ListingService.deleteListing(
     req.params.id,
     req.user

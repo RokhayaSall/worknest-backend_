@@ -1,19 +1,13 @@
 import { RoomService } from "../services/room.service.js";
 
-export const getRooms = async (
-  req,
-  res
-) => {
+export const getRooms = async (req, res) => {
   const rooms =
     await RoomService.getAll();
 
   res.status(200).json(rooms);
 };
 
-export const getRoom = async (
-  req,
-  res
-) => {
+export const getRoom = async (req, res) => {
   const room =
     await RoomService.getById(
       req.params.id
@@ -22,37 +16,31 @@ export const getRoom = async (
   res.status(200).json(room);
 };
 
-export const createRoom = async (
-  req,
-  res
-) => {
+export const createRoom = async (req, res) => {
   const room =
     await RoomService.createRoom(
-      req.body
+      req.body,
+      req.user
     );
 
   res.status(201).json(room);
 };
 
-export const updateRoom = async (
-  req,
-  res
-) => {
+export const updateRoom = async (req, res) => {
   const room =
     await RoomService.updateRoom(
       req.params.id,
-      req.body
+      req.body,
+      req.user
     );
 
   res.status(200).json(room);
 };
 
-export const deleteRoom = async (
-  req,
-  res
-) => {
+export const deleteRoom = async (req, res) => {
   await RoomService.deleteRoom(
-    req.params.id
+    req.params.id,
+    req.user
   );
 
   res.status(200).json({

@@ -9,11 +9,8 @@ import {
 } from "../controllers/room.controller.js";
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-
 import { authorize } from "../middlewares/authorize.middleware.js";
-
 import validate from "../middlewares/validate.middleware.js";
-
 import { validateRoom } from "../validators/room.validator.js";
 
 const router = express.Router();
@@ -33,10 +30,7 @@ router.get("/:id", getRoom);
 router.post(
   "/",
   authMiddleware,
-  authorize(
-    "proprietaire",
-    "admin"
-  ),
+  authorize("proprietaire", "admin"),
   validateRoom,
   validate,
   createRoom
@@ -45,10 +39,7 @@ router.post(
 router.put(
   "/:id",
   authMiddleware,
-  authorize(
-    "proprietaire",
-    "admin"
-  ),
+  authorize("proprietaire", "admin"),
   validateRoom,
   validate,
   updateRoom
@@ -57,10 +48,7 @@ router.put(
 router.delete(
   "/:id",
   authMiddleware,
-  authorize(
-    "proprietaire",
-    "admin"
-  ),
+  authorize("proprietaire", "admin"),
   deleteRoom
 );
 
