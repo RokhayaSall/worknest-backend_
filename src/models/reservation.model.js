@@ -39,8 +39,7 @@ export const Reservation = {
     return rows;
   },
 
-  // Vérifier si la chambre est déjà réservée
-  // sur la période demandée
+  
   async findConflict(roomId, startAt, endAt) {
     const [rows] = await db.query(
       `
